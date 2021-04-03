@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  app-prod:
+    container_name: dockerized-react-app-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    tty: true
+    restart: always
+    stdin_open: true
+    volumes:
+      # - ../../certificates:/etc/nginx/certs = EXEMPLE
+      - '/app/node_modules'
+      - '.:/app'
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - traefik_web
+
+networks:
+  traefik_web:
+    external: true
